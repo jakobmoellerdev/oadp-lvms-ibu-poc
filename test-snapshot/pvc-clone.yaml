@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-lvms-snapshot
+  namespace: test-lvms
+spec:
+  storageClassName: lvms-vg1
+  resources:
+    requests:
+      storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  dataSource:
+    name: test-lvms
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io

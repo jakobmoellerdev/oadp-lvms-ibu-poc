@@ -1,0 +1,33 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: dataprotectionapplication
+  namespace: openshift-adp
+  annotations:
+    ran.openshift.io/ztp-deploy-wave: "100"
+spec:
+  configuration:
+    restic:
+      enable: false
+    velero:
+      defaultPlugins:
+        - aws
+        - openshift
+      resourceTimeout: 10m
+  backupLocations:
+    - velero:
+        config:
+          profile: "default"
+          region: minio
+          s3Url: "http://REDACTED:9002"
+          insecureSkipTLSVerify: "true"
+          s3ForcePathStyle: "true"
+        provider: aws
+        default: true
+        credential:
+          key: cloud
+          name: cloud-credentials
+        objectStorage:
+          bucket: sno-worker-00
+          prefix: velero
+---

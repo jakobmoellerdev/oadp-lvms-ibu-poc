@@ -1,0 +1,40 @@
+apiVersion: velero.io/v1
+kind: Backup
+metadata:
+  name: lvms-partial-backup-01-test-lvms
+  namespace: openshift-adp
+  labels:
+    velero.io/storage-location: default
+spec:
+  includedNamespaces:
+    - test-lvms
+  includedClusterScopedResources:
+    - logicalvolumes.topolvm.io
+    - persistentvolumes
+    - volumesnapshotcontents
+---
+apiVersion: velero.io/v1
+kind: Backup
+metadata:
+  name: lvms-partial-backup-01-lvmcluster
+  namespace: openshift-adp
+  labels:
+    velero.io/storage-location: default
+spec:
+  includedNamespaces:
+    - openshift-storage
+  includedNamespaceScopedResources:
+    - lvmclusters
+    - lvmvolumegroups
+    - lvmvolumegroupnodestatuses
+#---
+#apiVersion: velero.io/v1
+#kind: Backup
+#metadata:
+#  name: mysql-sno-01
+#  labels:
+#    velero.io/storage-location: default
+#  namespace: openshift-adp
+#spec:
+#  includedNamespaces:
+#    - mysql-sno
